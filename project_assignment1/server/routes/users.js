@@ -39,7 +39,7 @@ router.post('/login', (req, res) => {
   if (user) {
     return res.json({ success: true, name: user.id });
   } else {
-    return res.status(401).json({ success: false, message: 'Invalid ID or password' });
+    return res.status(401).json({ success: false, message: 'ID 혹은 PW가 잘못되었습니다' });
   }
 });
 
