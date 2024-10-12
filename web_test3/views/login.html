@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <h1>Login</h1>
+  <form id="loginForm">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required><br>
+    <label for="pw">Password:</label>
+    <input type="password" id="pw" name="pw" required><br>
+    <button type="submit">Login</button>
+  </form>
+  <a href="/register">Go to Register</a>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const id = document.getElementById('id').value;
+      const pw = document.getElementById('pw').value;
+
+      fetch('/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, pw })
+      })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = `/home?name=${id}`;
+          } else {
+            alert('Invalid ID or password');
+          }
+        });
+    });
+  </script>
+</body>
+
+</html>

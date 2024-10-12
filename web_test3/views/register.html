@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <h1>Register</h1>
+  <form id="registerForm">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required>
+    <button type="button" onclick="checkDuplicateId()">Check ID</button><br>
+
+    <label for="pw1">Password:</label>
+    <input type="password" id="pw1" name="pw1" required><br>
+    <label for="pw2">Confirm Password:</label>
+    <input type="password" id="pw2" name="pw2" required><br>
+
+    <button type="submit" id="submitBtn" disabled>Register</button>
+  </form>
+
+  <script>
+    const pw1 = document.getElementById('pw1');
+    const pw2 = document.getElementById('pw2');
+    const submitBtn = document.getElementById('submitBtn');
+    const idInput = document.getElementById('id');
+
+    // 비밀번호 일치 여부 확인
+    pw2.addEventListener('input', function () {
+      if (pw1.value === pw2.value) {
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.disabled = true;
+      }
+    });
+
+    // ID 중복 체크
+    function checkDuplicateId() {
+      const id = idInput.value;
+      fetch(`/users/check-id?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.exists) {
+            alert('ID already exists');
+            submitBtn.disabled = true;
+          } else {
+            alert('ID is available');
+            if (pw1.value === pw2.value) {
+              submitBtn.disabled = false;
+            }
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // 회원가입 요청
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const id = idInput.value;
+      const pw1 = document.getElementById('pw1').value;
+
+      fetch('/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, pw1, pw2: pw1 })
+      })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = '/login';
+          } else {
+            alert('Registration failed');
+          }
+        });
+    });
+  </script>
+</body>
+
+</html>

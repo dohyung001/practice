@@ -1,3 +1,5 @@
+//middlewares.js
+
 const jwt = require("jsonwebtoken");
 //토큰의 유효성을 get하기 전에 미리 검증
 exports.verifyToken = (req, res, next) => {

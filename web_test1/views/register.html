@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+</head>
+
+<body>
+  <h1>Register</h1>
+  <form action="/users/register" method="POST">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required>
+    <button type="button" onclick="checkDuplicateId()">Check ID</button><br>
+
+    <label for="pw1">Password:</label>
+    <input type="password" id="pw1" name="pw1" required onblur="validatePassword()"><br>
+    <label for="pw2">Confirm Password:</label>
+    <input type="password" id="pw2" name="pw2" required onblur="validatePassword()"><br>
+
+    <button type="submit" id="submitBtn" disabled>Register</button>
+  </form>
+
+  <script>
+    function checkDuplicateId() {
+      // 여기에 ID 중복 체크 로직을 구현 (서버 호출을 통한 검증)
+      // 예시: alert("ID is available!");
+    }
+
+    function validatePassword() {
+      const pw1 = document.getElementById('pw1').value;
+      const pw2 = document.getElementById('pw2').value;
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (pw1 !== pw2) {
+        alert("Passwords do not match!");
+        submitBtn.disabled = true;
+      } else {
+        submitBtn.disabled = false;
+      }
+    }
+  </script>
+</body>
+
+</html>
