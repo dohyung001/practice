@@ -1,6 +1,12 @@
 const express = require('express');
 const path = require('path');
+const connectDB = require('./mongoose');  // MongoDB 연결 파일 가져오기
+require('dotenv').config();  // .env 파일의 환경 변수 로드
+
 const app = express();
+
+// MongoDB 연결
+connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

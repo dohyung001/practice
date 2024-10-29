@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,6 +6,15 @@ function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const isAuthenticated = !!sessionStorage.getItem('token'); // sessionStorage 사용
+
+  // 토큰이 있다면 홈으로
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home');
+      return;
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +24,9 @@ function Login() {
       const data = response.data;
 
       if (data.success) {
-        navigate(`/home?name=${data.name}`);  // 성공 시 홈 페이지로 이동
+        // 토큰을 sessionStorage에 저장
+        sessionStorage.setItem('token', data.token);
+        navigate(`/home`);
       } else {
         alert('ID나 PW가 잘못되었습니다.');
       }

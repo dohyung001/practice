@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';  // axios 임포트
+import axios from 'axios';
 
 function Register() {
   const [id, setId] = useState('');
   const [pw1, setPw1] = useState('');
   const [pw2, setPw2] = useState('');
-  const [isIdAvailable, setIsIdAvailable] = useState(null); // null: 체크 전, true: 사용 가능, false: 중복
-  const [isPasswordMatch, setIsPasswordMatch] = useState(null); // null: 체크 전, true: 일치, false: 불일치
-  const [formValid, setFormValid] = useState(false); // 모든 조건 충족 시 submit 가능
+  const [isIdAvailable, setIsIdAvailable] = useState(null);
+  const [isPasswordMatch, setIsPasswordMatch] = useState(null);
+  const [formValid, setFormValid] = useState(false);
   const navigate = useNavigate();
+  const isAuthenticated = !!sessionStorage.getItem('token'); // sessionStorage 사용
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home');
+      return;
+    }
+  }, [isAuthenticated, navigate]);
+
 
   // pw1, pw2에 따라 비밀번호 일치 여부 확인
   useEffect(() => {
