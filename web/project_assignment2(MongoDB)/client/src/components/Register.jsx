@@ -7,18 +7,18 @@ function Register() {
   const [pw1, setPw1] = useState('');
   const [pw2, setPw2] = useState('');
   const [isIdAvailable, setIsIdAvailable] = useState(null); // null: 체크 전, true: 사용 가능, false: 중복
-  const [isPasswordMatch, setIsPasswordMatch] = useState(false); // 비밀번호 일치 여부
+  const [isPasswordMatch, setIsPasswordMatch] = useState(null); // null: 체크 전, true: 일치, false: 불일치
   const [formValid, setFormValid] = useState(false); // 모든 조건 충족 시 submit 가능
   const navigate = useNavigate();
 
-  // 비밀번호 일치 여부 확인 (onblur 이벤트와 연동)
+  // pw1, pw2에 따라 비밀번호 일치 여부 확인
   useEffect(() => {
     setIsPasswordMatch(pw1 === pw2 && pw1 !== '');
   }, [pw1, pw2]);
 
-  // 모든 조건을 충족했을 때 submit 버튼 활성화
+  // ID 중복 여부와 비밀번호 일치 여부에 따라 폼 유효성 설정
   useEffect(() => {
-    setFormValid(isIdAvailable && isPasswordMatch);
+    setFormValid(isIdAvailable === true && isPasswordMatch === true);
   }, [isIdAvailable, isPasswordMatch]);
 
   // ID 중복 체크 함수 (버튼 클릭 시 호출)
@@ -81,7 +81,6 @@ function Register() {
           type="password"
           value={pw1}
           onChange={(e) => setPw1(e.target.value)}
-          onBlur={() => setIsPasswordMatch(pw1 === pw2 && pw1 !== '')}
           required
         />
         <br />
@@ -90,9 +89,10 @@ function Register() {
           type="password"
           value={pw2}
           onChange={(e) => setPw2(e.target.value)}
-          onBlur={() => setIsPasswordMatch(pw1 === pw2 && pw1 !== '')}
           required
         />
+        {isPasswordMatch === false && <span style={{ color: 'red' }}>비밀번호가 일치하지 않습니다</span>}
+        {isPasswordMatch === true && <span style={{ color: 'green' }}>비밀번호가 일치합니다</span>}
         <br />
         <button type="submit" disabled={!formValid}>
           Register
