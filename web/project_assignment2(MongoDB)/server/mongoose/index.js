@@ -5,11 +5,10 @@ const connect = async () => {
   if (process.env.NODE_ENV !== 'production') {
     mongoose.set('debug', true);
   }
-
+  //db 연결
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/web_assignment', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://carl200110:P28OQaBtgUxbDH2X@cluster0.xnnrq.mongodb.net/', {
+
       dbName: 'web_assignment',  // 연결할 데이터베이스 이름 설정
     });
     console.log('MongoDB 연결 성공');
