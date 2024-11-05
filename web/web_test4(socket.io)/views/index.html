@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="/socket.io/socket.io.js"></script>    <!-- 클라,서버 분리 시 cdn이라는 기술로 가져와야됨 -->
+      <script>
+          const socket = io(); //소캣 연결
+
+          socket.on("connect",()=>{  //연결시 콜백
+            socket.emit("event1","hello kw!"); //서버에 이벤트1 발생, 메세지 전달
+          })
+
+          socket.on("msg",(data)=>{    //msg이벤트 받으면 콜백
+            console.log(data);
+          })
+      </script>
+  </head>
+  <body>
+    <div>Hello world!</div>
+    <script src="/javascripts/index.js"></script>
+  </body>
+</html>
