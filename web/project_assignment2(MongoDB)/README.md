@@ -7,9 +7,13 @@
 [EC2 Instance Connection 환경]
 
 (1) 실행 방법
->cd 24-assignment1-dohyung002
+>cd 24-assignment2-dohyung001
 
 >cd server
+
+>export MONGO_URI=mongodb+srv://carl200110:P28OQaBtgUxbDH2X@cluster0.xnnrq.mongodb.net/
+
+>export JWT_SECRET=ttookkeenn123
 
 >npm start
 
@@ -49,3 +53,12 @@ http://52.202.72.79:5000
 혹은
 http://ec2-52-202-72-79.compute-1.amazonaws.com:5000 
 로 접속합니다.
+
+
+*추가
+
+server/.env 파일 내용
+
+>MONGO_URI=mongodb+srv://carl200110:P28OQaBtgUxbDH2X@cluster0.xnnrq.mongodb.net/
+
+>export JWT_SECRET=ttookkeenn123
