@@ -27,17 +27,17 @@ function TodoList() {
   };
 
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}> {/* 콘텍스트*/}
-      <Droppable droppableId="todolist"> {/* 드로퍼블(컨테이너) */}
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <Droppable droppableId="todolist">
         {(provided) => (
-          <TodoListBlock {...provided.droppableProps} ref={provided.innerRef}> {/*실제 드로퍼블(컨테이너)*/}
+          <TodoListBlock {...provided.droppableProps} ref={provided.innerRef}>
             {todos.map((todo, index) => (
-              <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}> {/* 드래거블(아이템) */}
+              <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
                 {(provided) => (
                   <div
                     ref={provided.innerRef}
-                    {...provided.draggableProps}  /* 실제 드래거블(아이템) */
-                    {...provided.dragHandleProps}  /*핸들 할 아이템*/
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
                   >
                     <TodoItem
                       id={todo.id}
