@@ -15,6 +15,8 @@ function todoReducer(state, action) {
       );
     case "REMOVE":
       return state.filter((todo) => todo.id !== action.id);
+    case "REORDER": //동기화
+      return action.newOrder;
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
